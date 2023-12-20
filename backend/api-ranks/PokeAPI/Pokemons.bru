@@ -1,0 +1,20 @@
+meta {
+  name: Pokemons
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292
+  body: none
+  auth: none
+}
+
+query {
+  offset: 0
+  limit: 1292
+}
+
+docs {
+  Pokemon API : https://pokeapi.co/docs/v2#pokemon
+}
