@@ -1,30 +1,42 @@
 import json
 import requests
-import psycopg2
 
-# Charger les données depuis le fichier
-with open('liste_pokemon.json', 'r') as file:
-    data = json.load(file)
+# Charger le fichier JSON depuis un fichier
 
-# Se connecter à la base de données
-conn = psycopg2.connect(
-    dbname='ranks_db',
-    user='matthieuRanks',
-    password='U8NGTjbieGAJEf2G',
-    host='db',
-    port='5432'
-)
-cursor = conn.cursor()
 
-# Parcourir la liste de Pokémon et insérer les données dans la base de données
-for pokemon in data['results']:
-    name = pokemon['name']
-    url = pokemon['url']
+def load_json_file(file_path):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    return data
 
-    # Insérer dans la base de données
-    cursor.execute("INSERT INTO dev.pokemon (name, url) VALUES (%s, %s)", (name, url))
 
-# Valider les changements et fermer la connexion
-conn.commit()
-cursor.close()
-conn.close()
+# Chemin vers votre fichier JSON
+# Remplacez par le chemin vers votre fichier JSON
+json_file_path = 'votre_fichier.json'
+
+# Charger les données depuis le fichier JSON
+json_data = load_json_file(json_file_path)
+
+# Parcours du fichier JSON pour récupérer name et url
+for entry in json_data['results']:
+    name = entry['name']
+    url = entry['url']
+
+    # Données à envoyer via la requête POST
+    payload = {
+        "name": name,
+        "url": url
+    }
+
+    # Exemple d'URL d'API à laquelle envoyer les données
+    api_endpoint = 'http://localhost:3000/pokemons'
+
+    # Envoi de la requête POST
+    response = requests.post(api_endpoint, json=payload)
+
+    # Vérification de la réponse
+    if response.status_code == 200:
+        print(f"Données ajoutées pour {name}")
+    else:
+        print(
+            f"Erreur lors de l'ajout des données pour {name}: {response.status_code}")
