@@ -1,9 +1,3 @@
-## Backend
-
-### Setup testing
-npm install --save-dev jest ts-jest @types/jest
-jest.config.js
-
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
