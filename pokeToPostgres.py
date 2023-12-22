@@ -12,7 +12,7 @@ def load_json_file(file_path):
 
 # Chemin vers votre fichier JSON
 # Remplacez par le chemin vers votre fichier JSON
-json_file_path = 'votre_fichier.json'
+json_file_path = 'liste_pokemon.json'
 
 # Charger les données depuis le fichier JSON
 json_data = load_json_file(json_file_path)

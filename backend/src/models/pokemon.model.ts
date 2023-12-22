@@ -43,7 +43,7 @@ Pokemon.init({
     sequelize,
     modelName: 'pokemon',
     tableName: 'pokemon',
-    schema: 'dev',
+    schema: 'development',
 });
 
 export default Pokemon;

@@ -3,7 +3,7 @@
     "username": "matthieuRanks",
     "password": "U8NGTjbieGAJEf2G",
     "database": "ranks_db",
-    "schema": "dev",
+    "schema": "development",
     "host": "localhost",
     "dialect": "postgres"
   },

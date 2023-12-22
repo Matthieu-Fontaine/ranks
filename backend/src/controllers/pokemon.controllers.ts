@@ -17,12 +17,12 @@ import BadRequestResponse from '../helpers/badRequestError.helper';
 import { findMissingFields } from '../utils/controllers.util';
 
 async function getPokemonsController(req: Request, res: Response) {
-	try {
-		const pokemons = await getPokemons();
-		new SuccessResponse(pokemons, 200).send(res);
-	} catch (err) {
-		new ServerErrorResponse(err).send(res);
-	}
+	const pokemons = await getPokemons()
+		.catch((err: any) => {
+			new ServerErrorResponse(err).send(res);
+		});
+
+	return new SuccessResponse(pokemons, 200).send(res);
 }
 
 
@@ -41,7 +41,7 @@ async function getPokemonController(req: Request, res: Response) {
 
 async function postPokemonsController(req: Request, res: Response) {
 	const requiredFields = [
-		'name', 'cp_id_client'
+		'name', 'url'
 	];
 
 	const missingFields = findMissingFields(req.body, requiredFields);
@@ -52,7 +52,7 @@ async function postPokemonsController(req: Request, res: Response) {
 
 	const newPokemon = new Pokemon({
 		name: req.body.name,
-		cp_id_client: req.body.cp_id_client
+		url: req.body.url
 	});
 
 	createPokemon(newPokemon)
@@ -72,9 +72,8 @@ async function postPokemonsController(req: Request, res: Response) {
 				}));
 
 				return new BadRequestResponse(validationErrors).send(res);
-			} else {
-				return new ServerErrorResponse(error).send(res);
 			}
+			return new ServerErrorResponse(error).send(res);
 		});
 }
 
@@ -93,7 +92,7 @@ function patchPokemonsController(req: Request, res: Response) {
 
 	const updatedPokemonData: Partial<Pokemon> = {
 		name: req.body.name || undefined, // Utilisez undefined si le champ est absent dans le body
-		url: req.body.cp_id_client || undefined
+		url: req.body.url || undefined
 	};
 
 	updatePokemon(id, updatedPokemonData)

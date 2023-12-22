@@ -6,6 +6,6 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('🏠'))
-app.get('/pokemons', pokemonRouter);
+app.use('/pokemons', pokemonRouter);
 
 export default app;
