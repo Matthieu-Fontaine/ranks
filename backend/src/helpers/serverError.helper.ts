@@ -2,12 +2,14 @@ import { Response } from 'express';
 
 class ServerErrorResponse {
   message : any;
-  constructor(message : any = 'Internal server error') {
+  statusCode : number;
+  constructor(message : any = 'Internal server error', statusCode : number = 500) {
     this.message = message;
+    this.statusCode = statusCode;
   }
 
   send(res : Response) {
-    res.status(500).json({ message: this.message });
+    res.status(this.statusCode).json({ message: this.message });
   }
 }
 
