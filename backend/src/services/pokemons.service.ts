@@ -8,8 +8,11 @@ async function getPokemon(id: number) {
 	return p;
 }
 
-async function getPokemons() {
-	const p = await Pokemon.findAll()
+async function getPokemons(offset: number, limit: number) {
+	const p = await Pokemon.findAll({
+		offset: offset,
+		limit: limit
+	})
 		.catch((err: any) => {
 			throw err;
 		});

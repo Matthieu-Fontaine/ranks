@@ -17,7 +17,12 @@ import BadRequestResponse from '../helpers/badRequestError.helper';
 import { findMissingFields } from '../utils/controllers.util';
 
 async function getPokemonsController(req: Request, res: Response) {
-	const pokemons = await getPokemons()
+	const { offset = 0, limit = 20 } = req.query; // Récupération des paramètres d'offset et de limite
+
+	const parsedOffset = parseInt(offset as string, 10);
+	const parsedLimit = parseInt(limit as string, 10);
+
+	const pokemons = await getPokemons(parsedOffset, parsedLimit)
 		.catch((err: any) => {
 			new ServerErrorResponse(err).send(res);
 		});
